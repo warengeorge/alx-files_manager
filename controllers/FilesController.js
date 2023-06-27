@@ -10,9 +10,7 @@ const FOLDER_PATH = process.env.FOLDER_PATH || '/tmp/files_manager';
 const fileQueue = new Queue('fileQueue');
 
 class FilesController {
-  /**
-   * Should create a new file in DB and in disk
-   */
+
   static async postUpload(request, response) {
     const { userId } = await userUtils.getUserIdAndKey(request);
 
@@ -58,9 +56,6 @@ class FilesController {
     return response.status(201).send(newFile);
   }
 
-  /**
-   * Should retrieve the file document based on the ID
-   */
   static async getShow(request, response) {
     const fileId = request.params.id;
 
@@ -87,10 +82,6 @@ class FilesController {
     return response.status(200).send(file);
   }
 
-  /**
-   * should retrieve all users file documents for a specific
-   * parentId and with pagination
-   */
   static async getIndex(request, response) {
     const { userId } = await userUtils.getUserIdAndKey(request);
 
@@ -139,9 +130,6 @@ class FilesController {
     return response.status(200).send(fileList);
   }
 
-  /**
-   * Should set isPublic to true on the file document based on the ID
-   */
   static async putPublish(request, response) {
     const { error, code, updatedFile } = await fileUtils.publishUnpublish(
       request,
@@ -153,9 +141,6 @@ class FilesController {
     return response.status(code).send(updatedFile);
   }
 
-  /**
-   * Should set isPublic to false on the file document based on the ID
-   */
   static async putUnpublish(request, response) {
     const { error, code, updatedFile } = await fileUtils.publishUnpublish(
       request,
@@ -167,9 +152,6 @@ class FilesController {
     return response.status(code).send(updatedFile);
   }
 
-  /**
-   * Should return the content of the file document based on the ID
-   */
   static async getFile(request, response) {
     const { userId } = await userUtils.getUserIdAndKey(request);
     const { id: fileId } = request.params;
